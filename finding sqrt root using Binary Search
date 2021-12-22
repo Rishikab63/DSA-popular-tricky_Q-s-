@@ -1,0 +1,54 @@
+
+#include<iostream>
+using namespace std;
+
+unsigned long int sqrtInteger(int x){
+
+        unsigned long int mid=0;
+        int lb,ub;
+
+        lb=0;
+        ub=x;
+        while(lb<=ub){
+
+            mid=ub+(lb-ub)/2;
+
+            if((mid*mid)==x || ((mid*mid)<x && (mid+1)*(mid+1)>x))
+                return mid;
+
+            else if((mid*mid)<x)
+                lb=mid+1;
+            else
+                ub=mid-1;
+        }
+     return -1;
+
+}
+
+double sqrtPrecise(int tempSol, int precision, int n){
+    double factor = 1;
+    double ans = tempSol;
+
+    for(int i=0; i<precision; i++) {                 //for digits after decimal 
+        factor = factor/10;
+
+        for(double j=ans; j*j<n; j= j+factor ){      //for increasing the digits after decimal i.e. e.g-6.01,6.02..6.08(will break in 6.08 and move back to i for next digit)
+            ans = j;
+        }
+    }
+
+    return ans;
+}
+
+
+
+int main(){
+
+    int n,sqrti=0;
+    cout<<"ENTER NUMBER:"<<endl;
+    cin>>n;
+    sqrti=sqrtInteger(n);                                              //sqrti is storing integer part of sqrt
+
+    cout<<"sqrt root is: "<<sqrtPrecise(sqrti,3,n)<<endl;              //3=> digits after decimal
+    return 0;
+}
