@@ -1,0 +1,42 @@
+
+bool ispossible(vector<int> arr,int n,int m,int mid){                                // this function is created to check if the mid value can be stored to answer..i.e. is mid value
+                                                                                        is fulfilling every conditions.
+    int sum=0,studentcount=1;                                                        // sum to store- 10, 10+20, 10+20+30..
+    for(int i=0;i<=n-1;i++){                                                         // loop to traverse the array
+        if(sum+arr[i]<=mid)                                                          //first checking the condition nad then storing in the sum variable.
+            sum=sum+arr[i];                                                                       
+        else{                                                                        //i.e. when 10+20+30 < 50  X
+            studentcount++;                                                          //i.e. moving to next student , student 2
+            if(studentcount>m || arr[i]>mid)                                         // checking if studentcount increased to number of students given e.g 3>2 || 40>5 when mid is 5 for example.
+                return false;                                             
+            sum=arr[i];                                                              if not returned false, then sum=30 storing.
+        }
+    }
+    return true;                                                                     // when every thing ids working correctly then return true.
+                                                                                       i.e mid can be a possible solution.
+}
+
+
+
+
+
+int allocateBooks(vector<int> arr, int n, int m) {                                        // function where we have to code
+    // Write your code here.
+    int s=0,mid,e,ans,sum=0;                                                              
+    for(int i=0;i<n;i++){                                                                 //suming up the array elements as possible solution can lye in b/w it.
+        sum=sum+arr[i];                                                               eg 10,20,30,40  sum=100 thrfore, min=0,max=100  min=> s, max=> e
+    }
+    e=sum;                                                                              storing max i.e 100 n end and working further like binary search i.e. reducing the search space.
+    
+    while(s<=e){                                                                    // code almost similar to binary search from here.
+        mid=s+(e-s)/2;
+        if(ispossible(arr,n,m,mid))                                                 // if true i.e mid value can be possible solution then storing it in ans.
+        {
+            ans=mid;
+            e=mid-1;                                                                // e=mid-1 as we have to find minimum value. thrfore, going left of mid.
+        }
+        else                                                               
+            s=mid+1;                                                  //if mid itself cannot be possible soln then number less than that will also not be. thrfore going for number greater then that.
+    }
+    return ans;
+}
